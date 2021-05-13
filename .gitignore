@@ -45,7 +45,7 @@ jspm_packages/
 typings/
 
 # Compiled code
-dist/
+dist/*.js
 
 # TypeScript cache
 *.tsbuildinfo
