@@ -1,0 +1,36 @@
+{
+  "name": "chatbot-backend",
+  "version": "1.0.0",
+  "description": "Backend of the chat project",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/educanjr/chatbot.git"
+  },
+  "author": "Eduardo Canal Montero",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/educanjr/chatbot/issues"
+  },
+  "homepage": "https://github.com/educanjr/chatbot#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^9.0.2",
+    "express": "^4.17.1",
+    "express-validator": "^6.11.1",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.6.2",
+    "sequelize-cli": "^6.2.0",
+    "socket.io": "^4.1.1",
+    "socket.io-client": "^4.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
