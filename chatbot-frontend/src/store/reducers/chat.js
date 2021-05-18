@@ -122,7 +122,7 @@ const chatReducer = (state = initialState, action) => {
 
             const chatsCopy = state.chats.map(chat => {
                 if(msg.chatId === chat.id) {
-                    if(msg.user.id === userId) {
+                    if(msg.User.id === userId) {
                         scrollBottom++;
                     } else {
                         newMessage = {

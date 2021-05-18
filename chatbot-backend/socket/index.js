@@ -46,7 +46,7 @@ const SocketServer = (server) => {
                     const chatter = users.get(chatters[i]);
                     chatter.sockets.forEach(socket => {
                         try{
-                            socket.to(socket).emit('online', user);
+                            io.to(socket).emit('online', user);
 
                         } catch(e) {
 
@@ -59,13 +59,13 @@ const SocketServer = (server) => {
 
             sockets.forEach(socket => {
                 try{
-                    socket.to(socket).emit('friends', friendOnline);
+                    io.to(socket).emit('friends', friendOnline);
                 } catch(e) {
 
                 }
             });
     
-            socket.to(socket.id).emit('typing', 'User typing...')
+            io.to(socket.id).emit('typing', 'User typing...')
         });
 
         socket.on('message', async (msg) => {
@@ -99,7 +99,7 @@ const SocketServer = (server) => {
                 console.log('RECEIVED MSG', msg);
                 console.log('RECEIVED SOCKETS', sockets);
                 sockets.forEach(socket => {
-                    socket.to(socket).emit('received', msg);
+                    io.to(socket).emit('received', msg);
                 });
             } catch(err) {
 
@@ -127,7 +127,7 @@ const SocketServer = (server) => {
                             const chatter = users.get(chatters[i]);
                             chatter.sockets.forEach(socket => {
                                 try{
-                                    socket.to(socket).emit('offline', user);
+                                    io.to(socket).emit('offline', user);
 
                                 } catch(e) {
 
