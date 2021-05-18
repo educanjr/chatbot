@@ -24,6 +24,6 @@ export const register = (params, history) => dispatch => {
 }
 
 export const logout = () => dispatch => {
-    AuthService.register();
+    AuthService.logout();
     dispatch({ type: LOGOUT });
 }

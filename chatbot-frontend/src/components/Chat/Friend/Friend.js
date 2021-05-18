@@ -9,7 +9,6 @@ const Friend = ({chat, click}) => {
     const currentChat = useSelector(state => state.chatReducer.currentChat);
 
     const isChatOpened = () => {
-        console.log(currentChat, chat.id);
         return currentChat && currentChat.id === chat.id ? 'openned' : ''
     }
 

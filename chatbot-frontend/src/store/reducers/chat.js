@@ -1,8 +1,11 @@
-import { FETCH_CHATS, SET_CURRENT_CHAT } from '../types/index';
+import { FETCH_CHATS, SET_CURRENT_CHAT, FRIENDS_ONLINE, FRIEND_OFFLINE, FRIEND_ONLINE, SET_SOCKET, RECEIVED_MSG } from '../types/index';
 
 const initialState = {
     chats: [],
-    currentChat: {}
+    currentChat: {},
+    socket: {},
+    newMessage: {chatId: null, seen: null},
+    scrollBottom: 0
 };
 
 const chatReducer = (state = initialState, action) => {
@@ -19,6 +22,148 @@ const chatReducer = (state = initialState, action) => {
                 ...state,
                 currentChat: payload
             }
+        case FRIENDS_ONLINE: {
+            const chatsCopy = state.chats.map(chat => {
+                return {
+                    ...chat,
+                    Users: chat.Users.map(user => {
+                        if(payload.includes(user.id)) {
+                            return {
+                                ...user,
+                                status: 'online'
+                            } 
+                        }
+
+                        return user;
+                    })
+                }
+            });
+            return {
+                ...state,
+                chats: chatsCopy
+            }
+        }
+        case FRIEND_OFFLINE: {
+            let currentChatCopy = {...state.currentChat};
+            const chatCopy = state.chats.map(chat => {
+                const users = chat.Users.map(user => {
+                    if(parseInt(payload.id) === user.id) {
+                        return {
+                            ...user,
+                            status: 'offline'
+                        } 
+                    }
+
+                    return user;
+                });
+
+                if(chat.id === currentChatCopy.id) {
+                    currentChatCopy = {
+                        ...currentChatCopy,
+                        Users: users
+                    }
+                }
+
+                return {
+                    ...chat,
+                    Users: users
+                };
+            });
+
+            return {
+                ...state,
+                chats: chatCopy,
+                currentChat: currentChatCopy
+            }
+        }
+        case FRIEND_ONLINE: {
+            let currentChatCopy = {...state.currentChat};
+            const chatCopy = state.chats.map(chat => {
+                const users = chat.Users.map(user => {
+                    if(parseInt(payload.id) === user.id) {
+                        return {
+                            ...user,
+                            status: 'online'
+                        } 
+                    }
+
+                    return user;
+                });
+
+                if(chat.id === currentChatCopy.id) {
+                    currentChatCopy = {
+                        ...currentChatCopy,
+                        Users: users
+                    }
+                }
+
+                return {
+                    ...chat,
+                    Users: users
+                };
+            });
+
+            return {
+                ...state,
+                chats: chatCopy,
+                currentChat: currentChatCopy
+            }
+        }
+        case SET_SOCKET:
+            return {
+                ...state,
+                socket: payload
+            }
+        case RECEIVED_MSG: {
+            const {msg, userId} = payload;
+            let currentChatCopy = {...state.currentChat};
+            let newMessage = {...state.newMessage};
+            let scrollBottom = {...state.scrollBottom};
+
+            const chatsCopy = state.chats.map(chat => {
+                if(msg.chatId === chat.id) {
+                    if(msg.user.id === userId) {
+                        scrollBottom++;
+                    } else {
+                        newMessage = {
+                            chatId: chat.id,
+                            seen: false
+                        }
+                    }
+
+                    if(msg.chatId === currentChatCopy.id){
+                        currentChatCopy = {
+                            ...currentChatCopy,
+                            Messages: [...currentChatCopy.Messages, ...[msg]]
+                        }
+                    }
+
+                    return {
+                        ...chat,
+                        Messages: [...chat.Messages, ...[msg]]
+                    };
+                }
+
+                return chat;
+            });
+
+            if(scrollBottom === state.scrollBottom) {
+                return {
+                    ...state,
+                    chats: chatsCopy,
+                    currentChat: currentChatCopy,
+                    newMessage
+                };
+            }
+
+            return {
+                ...state,
+                chats: chatsCopy,
+                currentChat: currentChatCopy,
+                newMessage,
+                scrollBottom
+            };
+        }
         default: {
             return state;
         }

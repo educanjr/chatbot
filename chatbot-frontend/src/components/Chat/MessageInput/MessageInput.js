@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import { setCurrentChat } from '../../../store/actions/chat';
 
 import './MessageInput.scss';
 
@@ -11,6 +9,7 @@ const MessageInput = ({chat}) => {
     const [image, setImage] = useState('');
 
     const user = useSelector(state => state.authReducer.user);
+    const socket = useSelector(state => state.chatReducer.socket);
 
     const handleMessage = ({target}) => {
         setMessage(target.value);
@@ -29,7 +28,7 @@ const MessageInput = ({chat}) => {
 
         const msg = {
             type: imageUpload ? 'image' : 'text',
-            fromUserId: user.id,
+            fromUser: user,
             toUser: chat.Users.map(user => user.id),
             chatId: chat.id,
             message: imageUpload ? image : message
@@ -39,12 +38,14 @@ const MessageInput = ({chat}) => {
         setImage('');
 
         // TODO: implement sockets
+        socket.emit('message', msg);
     }
 
     return (
         <div id='input-container'>
             <div id='message-input'>
                 <input 
+                    value={message}
                     type='text' 
                     placeholder='Type a message...'
                     onChange={e => handleMessage(e)}

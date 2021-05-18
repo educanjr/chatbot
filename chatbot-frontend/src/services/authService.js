@@ -9,7 +9,7 @@ const AuthService = {
                 return data;
             })
             .catch(err => {
-                console.log("Auth service error", err);
+                console.error("Auth service error", err);
                 throw err;
             });
     },
@@ -22,7 +22,7 @@ const AuthService = {
                 return data;
             })
             .catch(err => {
-                console.log("Auth service error", err);
+                console.error("Auth service error", err);
                 throw err;
             });
     },
