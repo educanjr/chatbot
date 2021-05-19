@@ -15,7 +15,7 @@ In order to test and run the solution, you will need the following:
 You can use the method of your preference; we recommend using Git Desktop or Git CLI. 
 To clone using Git CLI run the command:
 ```bash
-git clone https://grassvalley-ampp@dev.azure.com/grassvalley-ampp/AMPPCore/_git/gv.ampp.services.computecontrol.git
+git clone https://github.com/educanjr/chatbot.git
 ```
 
 
