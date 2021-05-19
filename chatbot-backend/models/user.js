@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       this.belongsToMany(models.Chat, {through: 'ChatUser', foreignKey: 'userId'});
       this.hasMany(models.ChatUser, {foreignKey: 'userId'});
+      this.hasMany(models.BotTracer, {foreignKey: 'userId'});
     }
   };
   User.init({

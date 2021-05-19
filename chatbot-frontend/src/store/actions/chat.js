@@ -4,6 +4,7 @@ import { FETCH_CHATS, SET_CURRENT_CHAT, FRIENDS_ONLINE, FRIEND_ONLINE, FRIEND_OF
 export const fetchChats = (params, history) => dispatch => {
     return ChatService.fetchChats()
         .then(data => {
+            if(!data) return;
             data.forEach(chat => {
                 chat.Users.forEach(user => {
                     user.status = 'offline';
@@ -16,6 +17,7 @@ export const fetchChats = (params, history) => dispatch => {
         .catch(err => {
             throw(err);
         });
+    
 }
 
 export const setCurrentChat = (chat) => dispatch => {

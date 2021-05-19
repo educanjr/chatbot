@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Chat extends Model {
+  class BotTracer extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,17 +11,19 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsToMany(models.User, {through: 'ChatUser', foreignKey: 'chatId'});
-      this.hasMany(models.ChatUser, {foreignKey: 'chatId'});
-      this.hasMany(models.Message, {foreignKey: 'chatId'});
-      this.hasMany(models.BotTracer, {foreignKey: 'chatId'});
+      this.belongsTo(models.Chat, {foreignKey: 'chatId'});
+      this.belongsTo(models.User, {foreignKey: 'userId'});
     }
   };
-  Chat.init({
-    type: DataTypes.STRING
+  BotTracer.init({
+    command: DataTypes.STRING,
+    params: DataTypes.STRING,
+    message: DataTypes.TEXT,
+    chatId: DataTypes.INTEGER,
+    userId: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'Chat',
+    modelName: 'BotTracer',
   });
-  return Chat;
+  return BotTracer;
 };

@@ -30,6 +30,21 @@ exports.chats = async(req, res) => {
                                 model: User
                             }
                         ],
+                        where: {
+                            [Op.or]: [
+                                {
+                                    [Op.and]: [
+                                        {type: 'bot'},
+                                        {fromUserId: req.user.id}
+                                    ]
+                                },
+                                {
+                                    [Op.not]: {
+                                        type: 'bot'
+                                    }
+                                }
+                            ]
+                        },
                         limit: 20,
                         order: [['id', 'DESC']]
                     }

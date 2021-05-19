@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
         const content = this.getDataValue('message');
 
         const url = `${config.appURL}:${config.appPort}`;
-        return type === 'text' ? content : `${url}/chat/${id}/${content}`;
+        return type === 'text' || type === 'bot' ? content : `${url}/chat/${id}/${content}`;
       }
     },
     chatId: DataTypes.INTEGER,

@@ -1,9 +1,5 @@
-const { Op } = require('sequelize');
-const { sequelize } = require('../models');
 const models = require('../models');
 const User = models.User;
-const Chat = models.Chat;
-const ChatUser = models.ChatUser;
 const Message = models.Message;
 
 exports.messages = async(req, res) => {
